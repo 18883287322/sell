@@ -1,6 +1,6 @@
 'use strict'
 const utils = require('./utils')
-const webpack = require('webpack')
+const webpack = require('webpack')  //node引入webpack
 const config = require('../config')
 const merge = require('webpack-merge')
 const path = require('path')
@@ -9,9 +9,22 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
-
+const express = require('express')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
+
+var app = express()
+
+var appData = require('../data.json');
+var seller = appData.seller;
+var goods = appData.goods;
+var ratings = appData.ratings;
+
+var apiRoutes = express.Router();
+app.use('/api', apiRoutes);
+
+
+
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -42,6 +55,29 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
+    },
+    before(app){
+      app.get('/api/seller', function (req, res) {
+        res.json({
+          errno: 0,
+          data: seller
+        });
+      });
+      
+      app.get('/api/goods', function (req, res) {
+        res.json({
+          errno: 0,
+          data: goods
+        });
+      });
+      
+      app.get('/api/ratings', function (req, res) {
+        res.json({
+          errno: 0,
+          data: ratings
+        });
+      });
+      
     }
   },
   plugins: [
@@ -52,7 +88,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin({   //指定编译后生成的html文件
       filename: 'index.html',
       template: 'index.html',
       inject: true

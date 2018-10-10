@@ -1,5 +1,5 @@
 // https://eslint.org/docs/user-guide/configuring
-
+//ESLINT的配置文件
 module.exports = {
   root: true,
   parserOptions: {
@@ -8,7 +8,7 @@ module.exports = {
   env: {
     browser: true,
   },
-  extends: [
+  extends: [   //继承标准规则
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
     'plugin:vue/essential', 
@@ -20,10 +20,10 @@ module.exports = {
     'vue'
   ],
   // add your custom rules here
-  rules: {
+  rules: {   //对标准规则的修改
     // allow async-await
     'generator-star-spacing': 'off',
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'   //开发环境允许debugger，生产环境不允许debugger
   }
 }

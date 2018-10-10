@@ -2,8 +2,8 @@ root = true
 
 [*]
 charset = utf-8
-indent_style = space
-indent_size = 2
-end_of_line = lf
+indent_style = space  
+indent_size = 2  #缩进大小
+end_of_line = lf  #换行符的风格
 insert_final_newline = true
-trim_trailing_whitespace = true
+trim_trailing_whitespace = true  #自动移除行尾多余空格
